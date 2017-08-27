@@ -1,19 +1,12 @@
-Clone the Repository with command
+Clone the Repository with command:git clone https://github.com/vped/game-app.git
 
- git clone https://github.com/vped/game-app.git
-Install the node_modules with command
+Install the node_modules with command: npm install
 
- npm install
+Install Webpack server: npm install webpack-dev-server -g
 
-Install Webpack server
+Build the webpack using : npm run build
 
-npm install webpack-dev-server -g
+Start the Webpack-dev-server:npm start
 
-Build the webpack using
 
- npm run build
-
-Start the Webpack-dev-server
-
-npm start
 Open the page in you browser, for instance this application starts on port 5000

@@ -8,11 +8,12 @@ class Game extends React.Component {
 			nextMovePosition:[2,2],
 			gameNumbers:this.initialData()
 		};
-		this.maxBound = this.state.gameNumbers.length-1;
-		this.minBound = 0;
+		this.maxBound = this.state.gameNumbers.length-1; // boundary condition
+	    this.minBound = 0;								// boundary condition
 		this.isValidMoveIndex = false;
 	}
 
+	//Initail gameNumbers value
 	 initialData(){
 		return [
 			[2,1,6,11],
@@ -22,6 +23,7 @@ class Game extends React.Component {
 		]
 	};
 
+	//Get move positions for clicked element
 	getMovePositions(row,col) {
 		let  movePositions = [];
 		if(row-1 >= this.minBound){
@@ -41,11 +43,13 @@ class Game extends React.Component {
 		return movePositions;
 	}
 
+	//Reset game
 	 resetGame =()=>{
 		const nextMovePosition = [2,2];
 		this.setState({gameNumbers: this.initialData(), nextMovePosition: nextMovePosition})
 	};
 
+	//get move positions and  Move clicked number to next movable index
 	calculateMove(rowNumber,colNumber,value) {
 		if(!value){
 			return;

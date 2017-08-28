@@ -7,11 +7,10 @@ class Game extends React.Component {
         this.state = {
             nextMovePosition: [2, 2],
             gameNumbers: this.initialData(),
-            totalClicks:0,
-            isGameWon:false
+            totalClicks: 0
         };
         this.maxBound = this.state.gameNumbers.length - 1; // boundary condition
-        this.minBound = 0;								// boundary condition
+        this.minBound = 0;								  // boundary condition
         this.isValidMoveIndex = false;
     }
 
@@ -26,20 +25,20 @@ class Game extends React.Component {
     };
 
 
-    checkWinStatus = ()=>{
-        const correctPosition =  [
-            [1, 2, 3, 4],
-            [5, 6, 7, 8],
-            [9, 10, 11, 12],
-            [13, 14, 15, ""]
-        ];
+    checkRowShift(row, col) {
 
-        const {gameNumbers} = this.state;
+        let {nextMovePosition, gameNumbers} = this.state;
+        const i = nextMovePosition[0];
+        const j = nextMovePosition[1];
 
-        if(JSON.stringify(correctPosition)===JSON.stringify(gameNumbers)){
-            this.setState({isGameWon:true});
+        //Horizontal row shift
+        if (row === i) {
+            nextMovePosition = [row, col];
+            gameNumbers[i].splice(j, 1);
+            gameNumbers[row].splice(col, 0, "");
+            this.setState({gameNumbers: gameNumbers, nextMovePosition: nextMovePosition});
         }
-    };
+    }
 
 
     //Get move positions for clicked element
@@ -65,7 +64,12 @@ class Game extends React.Component {
     //Reset game
     resetGame = ()=> {
         const nextMovePosition = [2, 2];
-        this.setState({gameNumbers: this.initialData(), nextMovePosition: nextMovePosition,totalClicks:0,isGameWon:false})
+        this.setState({
+            gameNumbers: this.initialData(),
+            nextMovePosition: nextMovePosition,
+            totalClicks: 0,
+            isGameWon: false
+        })
     };
 
     //get move positions and  Move clicked number to next movable index
@@ -73,7 +77,7 @@ class Game extends React.Component {
         if (!value) {
             return;
         }
-        let {nextMovePosition, gameNumbers,totalClicks} = this.state;
+        let {nextMovePosition, gameNumbers, totalClicks} = this.state;
         let movePositions = this.getMovePositions(rowNumber, colNumber);
 
         movePositions.forEach((rowPosition, i)=> {
@@ -87,15 +91,20 @@ class Game extends React.Component {
             gameNumbers[rowNumber][colNumber] = "";
             nextMovePosition = [rowNumber, colNumber];
 
-            this.setState({gameNumbers: gameNumbers, nextMovePosition: nextMovePosition,totalClicks:totalClicks+1}, ()=> {
+            this.setState({
+                gameNumbers: gameNumbers,
+                nextMovePosition: nextMovePosition,
+                totalClicks: totalClicks + 1
+            }, ()=> {
                 this.isValidMoveIndex = false;
-                this.checkWinStatus();
             })
+        } else {
+            this.checkRowShift(rowNumber, colNumber);
         }
     }
 
     render() {
-        const {gameNumbers,totalClicks,isGameWon} =this.state;
+        const {gameNumbers, totalClicks, isGameWon} =this.state;
 
         return (
             <div id="game-layout">
@@ -110,7 +119,8 @@ class Game extends React.Component {
                                 return row.map((col, j)=> {
                                     return (
 
-                                        <td className={col==""?"move-index":""} onClick={()=>this.calculateMove(i,j,col)} key={i+j}>
+                                        <td className={col==""?"move-index":""}
+                                            onClick={()=>this.calculateMove(i,j,col)} key={i+j}>
                                             <b>{col}</b>
                                         </td>
                                     )
@@ -120,11 +130,6 @@ class Game extends React.Component {
                     </tr>
                     </tbody>
                 </table>
-                {
-                    isGameWon?<div id="win">CONGRATULATIONS <br/>
-                        You Won
-                    </div>:""
-                }
 
                 <button className=" repaly-btn btn btn-default" onClick={this.resetGame}>Start Again</button>
 

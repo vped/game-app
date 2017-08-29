@@ -27,7 +27,7 @@ class Game extends React.Component {
 
     checkRowShift(row, col) {
 
-        let {nextMovePosition, gameNumbers} = this.state;
+        let {nextMovePosition, gameNumbers, totalClicks} = this.state;
         const i = nextMovePosition[0];
         const j = nextMovePosition[1];
 
@@ -36,7 +36,31 @@ class Game extends React.Component {
             nextMovePosition = [row, col];
             gameNumbers[i].splice(j, 1);
             gameNumbers[row].splice(col, 0, "");
-            this.setState({gameNumbers: gameNumbers, nextMovePosition: nextMovePosition});
+            this.setState({gameNumbers: gameNumbers, nextMovePosition: nextMovePosition, totalClicks: totalClicks + 1});
+        }
+
+        //Vertical row shift
+        else if (col === j) {
+            let tempArrForSwap = [];
+            nextMovePosition = [row, col];
+            let index = 0;
+            while (index < gameNumbers.length) {
+                tempArrForSwap[index] = gameNumbers[index][col];
+                index++;
+            }
+            if (row < i) {
+                tempArrForSwap.splice(row, 0, '');
+                tempArrForSwap.splice(i + 1, 1);
+            } else {
+                tempArrForSwap.splice(row + 1, 0, '');
+                tempArrForSwap.splice(i, 1);
+            }
+            index = 0;
+            while (index < gameNumbers.length) {
+                gameNumbers[index][col] = tempArrForSwap[index];
+                index++;
+            }
+            this.setState({gameNumbers: gameNumbers, nextMovePosition: nextMovePosition, totalClicks: totalClicks + 1});
         }
     }
 
@@ -118,7 +142,6 @@ class Game extends React.Component {
                             gameNumbers.map((row, i)=> {
                                 return row.map((col, j)=> {
                                     return (
-
                                         <td className={col==""?"move-index":""}
                                             onClick={()=>this.calculateMove(i,j,col)} key={i+j}>
                                             <b>{col}</b>

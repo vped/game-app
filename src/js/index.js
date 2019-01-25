@@ -133,8 +133,9 @@ class Game extends React.Component {
         return (
             <div id="game-layout">
                 <div className="col">
-                    Moves: <strong>{totalClicks}</strong>
+                 Total Moves: <strong>{totalClicks}</strong>
                 </div>
+                <div className="row"></div>
                 <table>
                     <tbody>
                     <tr>
@@ -154,7 +155,7 @@ class Game extends React.Component {
                     </tbody>
                 </table>
 
-                <button className=" repaly-btn btn btn-default" onClick={this.resetGame}>Start Again</button>
+                <button style={{marginTop:30}} className=" repaly-btn btn btn-default" onClick={this.resetGame}>Start Again</button>
 
             </div>
         );

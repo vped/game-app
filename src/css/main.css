@@ -11,7 +11,11 @@
 }
 
 .move-index{
-    background-color: green;
+    background-color: lightgray;
+}
+
+.move-index:hover{
+    background-color: white;
 }
 
 td {
@@ -32,7 +36,11 @@ td {
     width: 75px;
 }
 td:hover{
-    background-color:#00BFFF;
+    background-color: white;
+}
+
+.move-index:hover:after{
+    content: "Fill";
 }
 
 .replay-btn {

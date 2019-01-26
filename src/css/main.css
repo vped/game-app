@@ -47,4 +47,11 @@ td:hover{
     margin-top:40px
 }
 
+.footer {
+    position: absolute;
+    right:0;
+    bottom:0;
+    padding:20px;
+}
+
 

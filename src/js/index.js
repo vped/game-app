@@ -16,6 +16,7 @@ class Game extends React.Component {
 
     //Initail gameNumbers value
     initialData() {
+
         return [
             [2, 1, 6, 11],
             [9, 13, 5, 8],
@@ -131,32 +132,39 @@ class Game extends React.Component {
         const {gameNumbers, totalClicks, isGameWon} =this.state;
 
         return (
-            <div id="game-layout">
-                <div className="col">
-                 Total Moves: <strong>{totalClicks}</strong>
-                </div>
-                <div className="row"></div>
-                <table>
-                    <tbody>
-                    <tr>
-                        {
-                            gameNumbers.map((row, i)=> {
-                                return row.map((col, j)=> {
-                                    return (
-                                        <td className={col==""?"move-index":""}
-                                            onClick={()=>this.calculateMove(i,j,col)} key={i+j}>
-                                            <b>{col}</b>
-                                        </td>
-                                    )
+            <div>
+                <h1 style={{textAlign:'center'}}>15 Puzzle Game</h1>
+                <div id="game-layout">
+                    <div className="col">
+                     Total Moves: <strong>{totalClicks}</strong>
+                    </div>
+                    <div className="row"></div>
+                    <table>
+                        <tbody>
+                        <tr>
+                            {
+                                gameNumbers.map((row, i)=> {
+                                    return row.map((col, j)=> {
+                                        return (
+                                            <td className={col==""?"move-index":""}
+                                                onClick={()=>this.calculateMove(i,j,col)} key={i+j}>
+                                                <b>{col}</b>
+                                            </td>
+                                        )
+                                    })
                                 })
-                            })
-                        }
-                    </tr>
-                    </tbody>
-                </table>
+                            }
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <button style={{marginTop:30}} className=" repaly-btn btn btn-default" onClick={this.resetGame}>Start Again</button>
+                    <button style={{marginTop:30}} className=" repaly-btn btn btn-default" onClick={this.resetGame}>Start Again</button>
 
+                </div>
+                <div className="footer">
+                <h5 style={{textAlign:'right'}}>Developed By: Ved Prakash</h5>
+                <h5 style={{textAlign:'right'}}>Send Solved Screenshots : ved@augmate.com</h5>
+                </div>
             </div>
         );
     }

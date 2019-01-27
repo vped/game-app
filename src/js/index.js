@@ -16,8 +16,8 @@ class Game extends React.Component {
 
     //Initail gameNumbers value
     initialData =()=> {
-        var row =  Math.floor(Math.random() * 3);
-        var col =  Math.floor(Math.random() * 3);
+        var row =  2
+        var col =  Math.floor(Math.random() * 4);
 
         var puzzleArray = [
             [2, 1, 6, 11],
@@ -27,10 +27,14 @@ class Game extends React.Component {
         ];
         puzzleArray[row].splice([col],0,"");
         this.nextMovePosition = [row,col];
+        console.log(this.nextMovePosition)
+        console.log(puzzleArray,"puzzleArray")
         return puzzleArray;
     };
 
     checkRowShift(row, col) {
+        console.log(row,col)
+
 
         let {nextMovePosition, gameNumbers, totalClicks} = this.state;
         const i = nextMovePosition[0];
@@ -87,6 +91,8 @@ class Game extends React.Component {
         if ((col + 1 <= this.maxBound) || (col - 1 < this.minBound)) {
             movePositions.push([row, col + 1]);
         }
+
+        console.log(movePositions,"movePositions")
         return movePositions;
     }
 
@@ -136,6 +142,7 @@ class Game extends React.Component {
 
     render() {
         const {gameNumbers, totalClicks, nextMovePosition} =this.state;
+        console.log(nextMovePosition,"po")
 
         return (
             <div>

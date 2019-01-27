@@ -5,8 +5,8 @@ class Game extends React.Component {
     constructor() {
         super();
         this.state = {
-            nextMovePosition: [2, 2],
             gameNumbers: this.initialData(),
+            nextMovePosition:this.nextMovePosition,
             totalClicks: 0
         };
         this.maxBound = this.state.gameNumbers.length - 1; // boundary condition
@@ -15,16 +15,22 @@ class Game extends React.Component {
     }
 
     //Initail gameNumbers value
-    initialData() {
+    initialData =()=> {
 
-        return [
+        var row=  Math.floor(Math.random() * 3);
+        var col=  Math.floor(Math.random() * 3);
+
+        var puzzleArray = [
             [2, 1, 6, 11],
             [9, 13, 5, 8],
-            [4, 3, "", 15],
+            [4, 3,15],
             [10, 14, 12, 7]
-        ]
-    };
+        ];
+        puzzleArray[row].splice([col],0,"");
+        this.nextMovePosition = [row,col];
+        return puzzleArray;
 
+    };
 
     checkRowShift(row, col) {
 
@@ -88,10 +94,10 @@ class Game extends React.Component {
 
     //Reset game
     resetGame = ()=> {
-        const nextMovePosition = [2, 2];
+         // const nextMovePosition = [2, 2];
         this.setState({
             gameNumbers: this.initialData(),
-            nextMovePosition: nextMovePosition,
+            nextMovePosition: this.nextMovePosition,
             totalClicks: 0,
             isGameWon: false
         })
@@ -102,7 +108,7 @@ class Game extends React.Component {
         if (!value) {
             return;
         }
-        let {nextMovePosition, gameNumbers, totalClicks} = this.state;
+        let {nextMovePosition, gameNumbers, totalClicks} = {...this.state};
         let movePositions = this.getMovePositions(rowNumber, colNumber);
 
         movePositions.forEach((rowPosition, i)=> {
@@ -116,20 +122,22 @@ class Game extends React.Component {
             gameNumbers[rowNumber][colNumber] = "";
             nextMovePosition = [rowNumber, colNumber];
 
-            this.setState({
+
+            this.setState((state)=>{
+                return{
                 gameNumbers: gameNumbers,
                 nextMovePosition: nextMovePosition,
-                totalClicks: totalClicks + 1
+                totalClicks: state.totalClicks}
             }, ()=> {
+                this.checkRowShift(rowNumber, colNumber);
                 this.isValidMoveIndex = false;
             })
         } else {
-            this.checkRowShift(rowNumber, colNumber);
         }
     }
 
     render() {
-        const {gameNumbers, totalClicks, isGameWon} =this.state;
+        const {gameNumbers, totalClicks, nextMovePosition} =this.state;
 
         return (
             <div>
@@ -138,7 +146,7 @@ class Game extends React.Component {
                     <div className="col">
                      Total Moves: <strong>{totalClicks}</strong>
                     </div>
-                    <div className="row"></div>
+                    <div className="row"/>
                     <table>
                         <tbody>
                         <tr>
@@ -146,7 +154,7 @@ class Game extends React.Component {
                                 gameNumbers.map((row, i)=> {
                                     return row.map((col, j)=> {
                                         return (
-                                            <td className={col==""?"move-index":""}
+                                            <td className={col === "" ? "move-index" : ""}
                                                 onClick={()=>this.calculateMove(i,j,col)} key={i+j}>
                                                 <b>{col}</b>
                                             </td>

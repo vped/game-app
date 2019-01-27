@@ -16,9 +16,8 @@ class Game extends React.Component {
 
     //Initail gameNumbers value
     initialData =()=> {
-
-        var row=  Math.floor(Math.random() * 3);
-        var col=  Math.floor(Math.random() * 3);
+        var row =  Math.floor(Math.random() * 3);
+        var col =  Math.floor(Math.random() * 3);
 
         var puzzleArray = [
             [2, 1, 6, 11],
@@ -29,7 +28,6 @@ class Game extends React.Component {
         puzzleArray[row].splice([col],0,"");
         this.nextMovePosition = [row,col];
         return puzzleArray;
-
     };
 
     checkRowShift(row, col) {

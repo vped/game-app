@@ -12,6 +12,9 @@
 
 .move-index{
     background-color: lightgray;
+    -webkit-transition: 0.15s left, 0.15s top;
+    transition: 0.15s left, 0.15s top;
+
 }
 
 .move-index:hover{
@@ -40,7 +43,6 @@ td:hover{
 }
 
 .move-index:hover:after{
-    content: "Fill";
 }
 
 .replay-btn {
@@ -52,6 +54,11 @@ td:hover{
     right:0;
     bottom:0;
     padding:20px;
+}
+
+#puzzle.animate span{
+    -webkit-transition: 0.15s left, 0.15s top;
+    transition: 0.15s left, 0.15s top;
 }
 
 

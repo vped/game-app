@@ -27,13 +27,10 @@ class Game extends React.Component {
         ];
         puzzleArray[row].splice([col],0,"");
         this.nextMovePosition = [row,col];
-        console.log(this.nextMovePosition)
-        console.log(puzzleArray,"puzzleArray")
         return puzzleArray;
     };
 
     checkRowShift(row, col) {
-        console.log(row,col)
 
 
         let {nextMovePosition, gameNumbers, totalClicks} = this.state;
@@ -92,7 +89,6 @@ class Game extends React.Component {
             movePositions.push([row, col + 1]);
         }
 
-        console.log(movePositions,"movePositions")
         return movePositions;
     }
 
@@ -142,7 +138,6 @@ class Game extends React.Component {
 
     render() {
         const {gameNumbers, totalClicks, nextMovePosition} =this.state;
-        console.log(nextMovePosition,"po")
 
         return (
             <div>
